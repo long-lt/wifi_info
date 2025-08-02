@@ -1,8 +1,9 @@
 name: wifi_info
 description: A Flutter plugin to get WiFi SSID and BSSID on Android/iOS.
 
-version: 0.0.1
-homepage:
+version: 0.0.2
+homepage: https://github.com/long-lt/wifi_info
+repository: https://github.com/long-lt/wifi_info
 
 environment:
   sdk: ^3.6.0
