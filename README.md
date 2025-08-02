@@ -1,4 +1,4 @@
-# wifi_info
+# wifi_info_plus
 
 A Flutter plugin to get current Wi-Fi information such as **SSID** and **BSSID** on **Android** and **iOS**.
 
@@ -22,4 +22,4 @@ Supports:
 
 ```yaml
 dependencies:
-  wifi_info: ^0.0.1
+  wifi_info_plus: ^0.0.1
