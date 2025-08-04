@@ -22,4 +22,4 @@ Supports:
 
 ```yaml
 dependencies:
-  wifi_info_plus: ^0.0.1
+  wifi_info_plus: ^0.0.2
