@@ -1,4 +1,4 @@
-package com.long.wifi_info
+package com.long.wifi_info_plus
 
 import android.Manifest
 import android.content.Context

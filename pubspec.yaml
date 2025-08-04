@@ -23,7 +23,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.long.wifi_info
+        package: com.long.wifi_info_plus
         pluginClass: WifiInfoPlugin
       ios:
         pluginClass: WifiInfoPlugin
