@@ -1,12 +1,11 @@
 import Flutter
 import UIKit
 import CoreLocation
-import SystemConfiguration.CaptiveNetwork
+import NetworkExtension
 
 public class WifiInfoPlugin: NSObject, FlutterPlugin, CLLocationManagerDelegate {
-
-    var locationManager: CLLocationManager?
-    var pendingResult: FlutterResult?
+    private var locationManager: CLLocationManager?
+    private var result: FlutterResult?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "wifi_info", binaryMessenger: registrar.messenger())
@@ -16,71 +15,51 @@ public class WifiInfoPlugin: NSObject, FlutterPlugin, CLLocationManagerDelegate 
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getPlatformVersion":
-            result("iOS " + UIDevice.current.systemVersion)
         case "getWifiInfo":
-            self.pendingResult = result
-            requestLocationPermissionIfNeeded()
+            self.result = result
+            requestWifiInfo()
         default:
             result(FlutterMethodNotImplemented)
         }
     }
 
-    private func requestLocationPermissionIfNeeded() {
-        let status = CLLocationManager.authorizationStatus()
+    private func requestWifiInfo() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
 
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            sendWifiInfo()
-        } else if status == .notDetermined {
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager?.requestWhenInUseAuthorization()
+        } else if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
+            fetchWifiInfo()
         } else {
-            pendingResult?(FlutterError(code: "NO_LOCATION_PERMISSION",
-                                        message: "Location permission not granted",
-                                        details: nil))
-            pendingResult = nil
+            result?(FlutterError(code: "PERMISSION_DENIED", message: "Quyền Location bị từ chối", details: nil))
         }
     }
 
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
-            sendWifiInfo()
+            fetchWifiInfo()
         } else if status != .notDetermined {
-            pendingResult?(FlutterError(code: "NO_LOCATION_PERMISSION",
-                                        message: "Location permission denied",
-                                        details: nil))
-            pendingResult = nil
+            result?(FlutterError(code: "PERMISSION_DENIED", message: "Quyền Location bị từ chối", details: nil))
         }
     }
 
-    private func sendWifiInfo() {
-        guard let ssid = getSSID(), let bssid = getBSSID() else {
-            pendingResult?(FlutterError(code: "NO_WIFI_INFO",
-                                        message: "Unable to retrieve Wi-Fi info",
-                                        details: nil))
-            pendingResult = nil
-            return
+    private func fetchWifiInfo() {
+        if #available(iOS 14.0, *) {
+            NEHotspotNetwork.fetchCurrent { [weak self] network in
+                DispatchQueue.main.async {
+                    if let network = network {
+                        self?.result?([
+                            "ssid": network.ssid,
+                            "bssid": network.bssid
+                        ])
+                    } else {
+                        self?.result?(FlutterError(code: "NO_WIFI", message: "Không lấy được Wi‑Fi info", details: nil))
+                    }
+                }
+            }
+        } else {
+            result?(FlutterError(code: "UNSUPPORTED", message: "Yêu cầu iOS 14 trở lên", details: nil))
         }
-        pendingResult?(["ssid": ssid, "bssid": bssid])
-        pendingResult = nil
-    }
-
-    private func getSSID() -> String? {
-        guard let interface = (CNCopySupportedInterfaces() as? [String])?.first,
-              let unsafeInterfaceData = CNCopyCurrentNetworkInfo(interface as CFString) as? [String: Any],
-              let ssid = unsafeInterfaceData["SSID"] as? String else {
-            return nil
-        }
-        return ssid
-    }
-
-    private func getBSSID() -> String? {
-        guard let interface = (CNCopySupportedInterfaces() as? [String])?.first,
-              let unsafeInterfaceData = CNCopyCurrentNetworkInfo(interface as CFString) as? [String: Any],
-              let bssid = unsafeInterfaceData["BSSID"] as? String else {
-            return nil
-        }
-        return bssid
     }
 }

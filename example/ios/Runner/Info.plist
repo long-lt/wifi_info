@@ -26,12 +26,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Used to get the SSID of the connected wifi</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Used to get the SSID of the connected wifi</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Used to get the SSID of the connected wifi</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -51,5 +45,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+        <string>Ứng dụng cần quyền vị trí để lấy thông tin Wi‑Fi.</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Ứng dụng cần quyền vị trí để lấy thông tin Wi‑Fi.</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>Ứng dụng cần quyền vị trí để lấy thông tin Wi‑Fi.</string>
+        <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+        <dict>
+            <key>WiFiAccess</key>
+            <string>Ứng dụng cần truy cập thông tin Wi‑Fi để hiển thị SSID.</string>
+        </dict>
 </dict>
 </plist>

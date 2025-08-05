@@ -1,25 +1,15 @@
-# wifi_info_plus
+# wifi_info
 
-A Flutter plugin to get current Wi-Fi information such as **SSID** and **BSSID** on **Android** and **iOS**.
+A new Flutter project.
 
-Supports:
-- ✅ Android (via `WifiManager`)
-- ✅ iOS (via `CNCopyCurrentNetworkInfo`)
+## Getting Started
 
----
+This project is a starting point for a Flutter
+[plug-in package](https://flutter.dev/to/develop-plugins),
+a specialized package that includes platform-specific implementation code for
+Android and/or iOS.
 
-## ✨ Features
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
-- Get current Wi-Fi **SSID**
-- Get current Wi-Fi **BSSID**
-- Simple API: `WifiInfo.getWifiInfo()`
-
----
-
-## 🚀 Installation
-
-### 📦 From pub.dev (when published)
-
-```yaml
-dependencies:
-  wifi_info_plus: ^0.0.2

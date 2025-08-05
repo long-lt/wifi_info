@@ -1,4 +1,4 @@
-package com.example.wifi_info_example
+package com.tah.wifi_info_example
 
 import io.flutter.embedding.android.FlutterActivity
 
