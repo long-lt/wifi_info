@@ -13,7 +13,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _wifiName = 'Unknown';
-  final _wifiInfoPlugin = WifiInfo();
 
   @override
   void initState() {
@@ -23,9 +22,9 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _loadWifiInfo() async {
     try {
-      final info = await _wifiInfoPlugin.getWifiInfo();
+      final wifiName = await WifiInfo.instance.networkName();
       if (mounted) {
-        setState(() => _wifiName = info?.ssid ?? 'Unknown');
+        setState(() => _wifiName = wifiName ?? 'Unknown');
       }
     } on PlatformException catch (e) {
       if (mounted) {
