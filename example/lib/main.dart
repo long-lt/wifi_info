@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wifi_info/wifi_info.dart';
+import 'package:wifi_info_ext/wifi_info.dart';
+import 'package:wifi_info_ext/wifi_info.dart';
 
 void main() => runApp(const MyApp());
 
