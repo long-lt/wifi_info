@@ -1,10 +1,10 @@
-name: wifi_info_plus
+name: wifi_info_ext
 description: "A Flutter plugin to retrieve Wi-Fi network information (SSID, BSSID, IP) on Android and iOS."
-version: 0.0.3
+version: 0.0.1
 homepage: https://github.com/long-lt/wifi_info/
 repository: https://github.com/long-lt/wifi_info
 issue_tracker: https://github.com/long-lt/wifi_info/issues
-publish_to: https://pub.dev/packages/wifi_info_plus
+publish_to: https://pub.dev/packages/wifi_info_ext
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
